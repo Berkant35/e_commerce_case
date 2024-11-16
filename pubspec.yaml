@@ -18,6 +18,8 @@ dependencies:
   hive_flutter: ^1.1.0
   dio: ^5.7.0
   responsive_sizer: ^3.3.1
+  logger: ^2.5.0
+  go_router: ^14.6.0
 
 dev_dependencies:
   flutter_test:
