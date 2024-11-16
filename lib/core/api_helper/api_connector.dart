@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
+import 'package:e_commerce_case/main.dart';
 import '../config/api_config.dart';
 import 'app_exception.dart';
 
@@ -28,43 +28,61 @@ class ApiConnector {
     );
 
     _dio = Dio(baseOptions);
-    _dio.interceptors.add(InterceptorsWrapper(
+    final interceptor = InterceptorsWrapper(
+      onRequest: (options, handler) {
+        logger.i('Request: ${options.method} ${options.uri}');
+        return handler.next(options);
+      },
+      onResponse: (response, handler) {
+        logger.i('Response: ${response.statusCode} ${response.statusMessage}');
+        return handler.next(response);
+      },
       onError: (e, handler) {
+        logger.e('Error: ${e.message}');
         handler.next(e);
       },
-    ));
+    );
+
+    _dio.interceptors.add(interceptor);
+
+
   }
 
-  Future<dynamic> get(String url, {Map<String, String>? headers}) async {
+  Future<dynamic> get(String path, {Map<String, String>? body}) async {
     try {
-      final response = await _dio.get(url, options: Options(headers: headers)).timeout(
-        ApiConfig.crudTimeout,
-        onTimeout: () => throw TimeoutException('Connection timed out'),
-      );
+      final response =
+          await _dio.get(_dio.options.baseUrl+path,data: body).timeout(
+                ApiConfig.crudTimeout,
+                onTimeout: () => throw TimeoutException('Connection timed out'),
+              );
       return _handleResponse(response);
     } on DioException catch (e) {
       _handleDioError(e);
     }
   }
 
-  Future<dynamic> post(String url, {required Object body, Map<String, String>? headers}) async {
+  Future<dynamic> post(String path, {required Map<String, String>? body}) async {
     try {
-      final response = await _dio.post(url, data: body, options: Options(headers: headers)).timeout(
-        ApiConfig.crudTimeout,
-        onTimeout: () => throw TimeoutException('Connection timed out'),
-      );
+      final response = await _dio
+          .post(_dio.options.baseUrl+path, data: body)
+          .timeout(
+            ApiConfig.crudTimeout,
+            onTimeout: () => throw TimeoutException('Connection timed out'),
+          );
       return _handleResponse(response);
     } on DioException catch (e) {
       _handleDioError(e);
     }
   }
 
-  Future<dynamic> delete(String url, {Map<String, String>? headers, Object? body}) async {
+  Future<dynamic> delete(String path, {required Map<String, String>? body}) async {
     try {
-      final response = await _dio.delete(url, data: body, options: Options(headers: headers)).timeout(
-        ApiConfig.crudTimeout,
-        onTimeout: () => throw TimeoutException('Connection timed out'),
-      );
+      final response = await _dio
+          .delete(_dio.options.baseUrl+path, data: body)
+          .timeout(
+            ApiConfig.crudTimeout,
+            onTimeout: () => throw TimeoutException('Connection timed out'),
+          );
       return _handleResponse(response);
     } on DioException catch (e) {
       _handleDioError(e);
@@ -77,9 +95,11 @@ class ApiConnector {
       case 201:
         return _convertToJson(response.data);
       case 401:
-        throw UnauthorisedException('Unauthorized access: ${response.statusMessage}');
+        throw UnauthorisedException(
+            'Unauthorized access: ${response.statusMessage}');
       default:
-        throw BadRequestException('Error ${response.statusCode}: ${response.statusMessage}');
+        throw BadRequestException(
+            'Error ${response.statusCode}: ${response.statusMessage}');
     }
   }
 
@@ -92,7 +112,8 @@ class ApiConnector {
   }
 
   void _handleDioError(DioException e) {
-    if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+    if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.receiveTimeout) {
       throw FetchDataException('Timeout occurred');
     } else if (e.type == DioExceptionType.badResponse) {
       final response = e.response;
@@ -101,7 +122,7 @@ class ApiConnector {
       }
     } else if (e.type == DioExceptionType.cancel) {
       throw InterruptException('Interrupt error: ${e.message}');
-    }else if(e.type == DioExceptionType.badCertificate){
+    } else if (e.type == DioExceptionType.badCertificate) {
       throw NetworkException('Bad certificate error: ${e.message}');
     } else if (e.type == DioExceptionType.connectionError) {
       throw NetworkException('Connection error: ${e.message}');
