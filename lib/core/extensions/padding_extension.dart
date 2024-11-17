@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-extension PaddingExtension on EdgeInsets {
+extension PaddingExtension on BuildContext {
   // Padding
   EdgeInsets get paddingLow =>  EdgeInsets.all(8.px);
   EdgeInsets get paddingNormal =>  EdgeInsets.all(15.px);

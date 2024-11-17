@@ -1,5 +1,5 @@
 import 'package:e_commerce_case/core/routes/route_names.dart';
-import 'package:e_commerce_case/features/home/presentation/pages/home_screen.dart';
+import 'package:e_commerce_case/features/home/presentation/pages/home/home_screen.dart';
 import 'package:e_commerce_case/features/splash/presentation/pages/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
