@@ -9,7 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'core/api_helper/api_connector.dart';
-import 'core/constants/path.dart';
+import 'core/constants/paths.dart';
 import 'core/theme/theme.dart';
 import 'injection.dart' as di;
 
