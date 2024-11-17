@@ -6,9 +6,6 @@ Commit mesajları aşağıdaki yapıya uygun olarak yazılmıştır:
 
 Türler ve Anlamları
 feat: Yeni bir özellik eklendiğini belirtir.
-Örnek: feat: implement feature B
 fix: Hata düzeltildiğini belirtir.
-Örnek: fix: adjust broken layout of feature A
 chore: Fonksiyonellik içermeyen teknik güncellemeleri belirtir (ör. dokümantasyon, refaktör).
-Örnek: chore: added types to feature A
 Bu format, commit geçmişinin anlaşılabilir ve izlenebilir olmasını sağlar.
