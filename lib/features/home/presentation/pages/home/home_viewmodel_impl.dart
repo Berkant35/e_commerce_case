@@ -14,6 +14,7 @@ final categoriesControlProvider =
 class CategoriesControlNotifier extends StateNotifier<List<CategoryEntity>>
     implements HomeViewModel {
   CategoriesControlNotifier(List<CategoryEntity> state) : super([]);
+  CategoryEntity? selectedCategory;
 
   void changState(List<CategoryEntity> val) => state = val;
 
@@ -28,6 +29,17 @@ class CategoriesControlNotifier extends StateNotifier<List<CategoryEntity>>
     } on Exception catch (e) {
       logger.e(e);
       return [];
+    }
+  }
+
+  @override
+  Future<CategoryEntity?> chooseCategory(CategoryEntity category) async {
+    try {
+      selectedCategory = category;
+      return selectedCategory;
+    } on Exception catch (e) {
+      logger.e(e);
+      return selectedCategory;
     }
   }
 }
