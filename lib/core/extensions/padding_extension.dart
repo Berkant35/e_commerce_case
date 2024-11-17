@@ -3,6 +3,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 extension PaddingExtension on BuildContext {
   // Padding
+  EdgeInsets get paddingTiny =>  EdgeInsets.all(4.px);
   EdgeInsets get paddingLow =>  EdgeInsets.all(8.px);
   EdgeInsets get paddingNormal =>  EdgeInsets.all(15.px);
   EdgeInsets get paddingMedium =>  EdgeInsets.all(22.px);
