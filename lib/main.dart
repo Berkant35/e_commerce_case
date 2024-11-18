@@ -8,8 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'core/api_helper/api_connector.dart';
-import 'core/constants/paths.dart';
+
 import 'core/theme/theme.dart';
 import 'injection.dart' as di;
 
@@ -26,8 +25,7 @@ Future<void> main() async {
   await Hive.openBox('storefront');
   di.initializeDependencies();
 
-  var apiConnector = di.injector.get<ApiConnector>();
-  apiConnector.init(ApiConfig.baseUrl, ApiConfig.headers);
+
 
 
 

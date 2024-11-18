@@ -4,6 +4,7 @@ import 'package:e_commerce_case/features/home/data/datasources/api_datasource/re
 import 'package:e_commerce_case/features/home/data/repositories/home_repositories_iml.dart';
 import 'package:e_commerce_case/features/home/domain/repositories/home_repository.dart';
 import 'package:e_commerce_case/features/home/domain/usecases/get_categories.dart';
+import 'package:e_commerce_case/features/home/domain/usecases/get_product_by_categories.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt injector = GetIt.instance;
@@ -26,4 +27,5 @@ void initializeDependencies() {
 
   //use cases
   injector.registerLazySingleton<GetCategories>(() => GetCategories(injector()));
+  injector.registerLazySingleton<GetProductList>(() => GetProductList(injector()));
 }

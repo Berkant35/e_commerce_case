@@ -9,10 +9,15 @@ class Category with EquatableMixin {
   int? id;
   @JsonKey(name: 'name')
   String? name;
-
+  @JsonKey(name: 'metaDescription')
+  String? metaDescription;
+  @JsonKey(name: 'metaKeywords')
+  String? metaKeywords;
   Category({
     this.id,
     this.name,
+    this.metaDescription,
+    this.metaKeywords,
   });
 
   factory Category.fromJson(Map<String, dynamic> json){

@@ -1,6 +1,9 @@
-import 'package:e_commerce_case/core/extensions/padding_extension.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../search_viewmodel_impl.dart';
 
 class SearchInput extends ConsumerStatefulWidget {
   const SearchInput({
@@ -13,13 +16,21 @@ class SearchInput extends ConsumerStatefulWidget {
 
 class _SearchInputState extends ConsumerState<SearchInput> {
   final TextEditingController _controller = TextEditingController();
+  Timer? _debounce;
 
-  // Arama fonksiyonu (örnek)
+  // Bu aksiyonu sunucu tarafına gereksiz istek gitmemesi için 500 ms gecikme ile yapar.
   void _performSearch(String query) {
-    if (query.isNotEmpty) {
-      // Arama işlemini burada yapabilirsiniz
-      print("Arama yapılıyor: $query");
-    }
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      ref.read(searchQueryControlProvider.notifier).searchProduct(query);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _debounce?.cancel();
+    _controller.dispose();
   }
 
   @override
@@ -27,26 +38,23 @@ class _SearchInputState extends ConsumerState<SearchInput> {
     return TextField(
       controller: _controller,
       decoration: InputDecoration(
-        filled: true, // Arka plan rengini beyaz yapar
-        fillColor: Colors.white, // Arka plan beyaz
+        filled: true,
+        fillColor: Colors.white,
         labelText: 'Ara...',
-        labelStyle: TextStyle(color: Colors.grey), // Etiket rengi
+        labelStyle: const TextStyle(color: Colors.grey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0), // Kenar yuvarlama
-          borderSide: BorderSide(color: Colors.grey, width: 1), // Sınır rengi
+          borderSide:
+              const BorderSide(color: Colors.grey, width: 1), // Sınır rengi
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
-          borderSide: BorderSide(color: Colors.blue, width: 2), // Odaklanınca mavi sınır
-        ),
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            _performSearch(_controller.text);
-          },
+          borderSide: const BorderSide(
+              color: Colors.blue, width: 2), // Odaklanınca mavi sınır
         ),
       ),
-      onSubmitted: _performSearch,
+      onEditingComplete: () => _performSearch(_controller.text),
+      onChanged: _performSearch,
     );
   }
 }
