@@ -1,7 +1,7 @@
 class Paths{
   Paths._();
   static const categories = '/categories';
-  static const filterProducts = '/products';
+  static const products = '/products';
 }
 
 class FilterPaths{

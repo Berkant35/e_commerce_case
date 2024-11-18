@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/entities/home_entity.dart';
-import '../home_viewmodel_impl.dart';
+import '../home_viewmodel_imp.dart';
 
 class CategoryChipList extends ConsumerStatefulWidget {
   const CategoryChipList({

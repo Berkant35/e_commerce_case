@@ -20,6 +20,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
+      shortDetails: json['shortDetails'] as String?,
       images: (json['images'] as List<dynamic>?)
           ?.map((e) => Images.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -34,12 +35,13 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'sku': instance.sku,
       'stockAmount': instance.stockAmount,
       'price1': instance.price1,
-      'currency': instance.currency,
+      'currency': instance.currency?.toJson(),
       'discount': instance.discount,
-      'categories': instance.categories,
-      'images': instance.images,
+      'categories': instance.categories?.map((e) => e.toJson()).toList(),
+      'images': instance.images?.map((e) => e.toJson()).toList(),
       'updatedAt': instance.updatedAt,
       'createdAt': instance.createdAt,
+      'shortDetails': instance.shortDetails,
     };
 
 Currency _$CurrencyFromJson(Map<String, dynamic> json) => Currency(

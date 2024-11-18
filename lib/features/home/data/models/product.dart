@@ -1,5 +1,7 @@
+import 'package:e_commerce_case/core/extensions/time_extension.dart';
 import 'package:e_commerce_case/features/home/data/models/category.dart';
 import 'package:e_commerce_case/features/home/domain/entities/product_entity.dart';
+import 'package:e_commerce_case/features/home/domain/entities/proudct_detail_entity.dart';
 import 'package:e_commerce_case/main.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
@@ -31,6 +33,8 @@ class Product with EquatableMixin {
   String? updatedAt;
   @JsonKey(name: 'createdAt')
   String? createdAt;
+  @JsonKey(name: 'shortDetails')
+  String? shortDetails;
 
   Product({
     this.id,
@@ -42,6 +46,7 @@ class Product with EquatableMixin {
     this.currency,
     this.discount,
     this.categories,
+    this.shortDetails,
     this.images,
     this.updatedAt,
     this.createdAt,
@@ -69,6 +74,25 @@ class Product with EquatableMixin {
     updatedAt,
     createdAt
   ];
+
+  ProductDetailEntity toProductDetailEntity() {
+    final prodDetailEntity = ProductDetailEntity(
+      id: id.toString(),
+      name: name ?? '',
+      description: fullName ?? '',
+      price: price1.toString(),
+      image: images!.isNotEmpty ? images?.first.originalUrl ?? '' : '',
+      sku: sku ?? '',
+      stockAmount: stockAmount.toString(),
+      discount: discount.toString(),
+      categories: (categories != null && categories!.isNotEmpty)
+          ? categories!.map((e) => e.name ?? "-").toList()
+          : [],
+      updatedAt: updatedAt != null ? updatedAt!.toDateTimeFromCustomFormat() : DateTime.now(),
+      shortDetails: shortDetails ?? '',
+    );
+    return prodDetailEntity;
+  }
 
   ProductEntity toEntity() {
     final prodEntity = ProductEntity(

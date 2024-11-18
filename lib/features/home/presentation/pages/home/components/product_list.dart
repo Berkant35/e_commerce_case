@@ -3,8 +3,8 @@ import 'package:e_commerce_case/features/home/presentation/pages/home/components
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../home_viewmodel_impl.dart';
-import '../search_viewmodel_impl.dart';
+import '../home_viewmodel_imp.dart';
+import '../search_viewmodel_imp.dart';
 
 class ProductList extends ConsumerStatefulWidget {
   const ProductList({

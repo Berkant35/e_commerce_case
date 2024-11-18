@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../search_viewmodel_impl.dart';
+import '../search_viewmodel_imp.dart';
 
 class SearchInput extends ConsumerStatefulWidget {
   const SearchInput({
