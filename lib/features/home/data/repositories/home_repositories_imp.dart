@@ -1,6 +1,6 @@
 import 'package:e_commerce_case/features/home/data/datasources/api_datasource/remote_datasource.dart';
 import 'package:e_commerce_case/features/home/data/datasources/locale_datasource/locale_datasource.dart';
-import 'package:e_commerce_case/features/home/domain/entities/home_entity.dart';
+import 'package:e_commerce_case/features/home/domain/entities/category_entity.dart';
 import 'package:e_commerce_case/features/home/domain/entities/product_entity.dart';
 import 'package:e_commerce_case/features/home/domain/entities/proudct_detail_entity.dart';
 import 'package:e_commerce_case/features/home/domain/repositories/home_repository.dart';

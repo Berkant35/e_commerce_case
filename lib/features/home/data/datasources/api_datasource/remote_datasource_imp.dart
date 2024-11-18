@@ -3,7 +3,6 @@ import 'package:e_commerce_case/core/config/paths.dart';
 import 'package:e_commerce_case/features/home/data/datasources/api_datasource/remote_datasource.dart';
 import 'package:e_commerce_case/features/home/data/models/category.dart';
 import 'package:e_commerce_case/features/home/data/models/product.dart';
-import 'package:e_commerce_case/features/home/domain/entities/proudct_detail_entity.dart';
 import 'package:e_commerce_case/features/home/domain/usecases/get_product_by_categories.dart';
 
 class RemoteDatasourceImp extends RemoteDatasource {

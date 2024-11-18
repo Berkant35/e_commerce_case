@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final class ProductImage extends StatelessWidget {
   final String imageUrl;
 
-  const ProductImage({Key? key, required this.imageUrl}) : super(key: key);
+  const ProductImage({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,13 @@ final class ProductImage extends StatelessWidget {
         "https:$imageUrl",
         height: 300,
         fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            height: 300,
+            color: Colors.grey[200],
+            child: const Icon(Icons.error, size: 40, color: Colors.red),
+          );
+        },
       ),
     );
   }

@@ -3,7 +3,7 @@
 import 'package:e_commerce_case/features/home/domain/entities/product_entity.dart';
 import 'package:e_commerce_case/features/home/domain/entities/proudct_detail_entity.dart';
 
-import '../entities/home_entity.dart';
+import '../entities/category_entity.dart';
 import '../usecases/get_product_by_categories.dart';
 
 abstract class HomeRepository{
