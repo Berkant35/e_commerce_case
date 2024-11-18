@@ -1,6 +1,8 @@
+import 'package:e_commerce_case/core/constants/color.dart';
 import 'package:e_commerce_case/core/extensions/padding_extension.dart';
 import 'package:e_commerce_case/core/extensions/radius_extension.dart';
 import 'package:e_commerce_case/core/theme/theme.dart';
+import 'package:e_commerce_case/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,8 +21,11 @@ class CategoryChipList extends ConsumerStatefulWidget {
 class _CategoryChipListState extends ConsumerState<CategoryChipList> {
   @override
   Widget build(BuildContext context) {
+    final filterCategoryList =
+        ref.watch(categoriesAndProductControlProvider.notifier).getFilterCategories();
+
     return FutureBuilder<List<CategoryEntity>>(
-        future: ref.read(categoriesControlProvider.notifier).getCategories(),
+        future: ref.read(categoriesAndProductControlProvider.notifier).getCategories(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return _progress();
@@ -33,16 +38,13 @@ class _CategoryChipListState extends ConsumerState<CategoryChipList> {
           }
 
           if (snapshot.hasData) {
-            // return ListView.builder(
-            //     scrollDirection: Axis.horizontal,
-            //     itemCount: categories.length,
-            //     itemBuilder: (context, index) {
-            //       return _perChip(context, categories[index]);
-            //     });
+
             return Wrap(
               alignment: WrapAlignment.start,
               children: [
-                for (var category in categories) _perChip(context, category)
+                for (var category in categories)
+                  _perChip(context, category,
+                      filterCategoryList.contains(category)),
               ],
             );
           }
@@ -69,15 +71,35 @@ class _CategoryChipListState extends ConsumerState<CategoryChipList> {
     );
   }
 
-  Widget _perChip(BuildContext context, CategoryEntity? categories) {
+  Widget _perChip(
+      BuildContext context, CategoryEntity? categories, bool hasFilter) {
     return Padding(
       padding: context.paddingTiny,
-      child: Chip(
-        backgroundColor: lightTheme.primaryColorLight,
-        shape: RoundedRectangleBorder(
-          borderRadius: context.radiusMedium,
+      child: InkWell(
+        onTap: () {
+          if (hasFilter) {
+            ref
+                .read(categoriesAndProductControlProvider.notifier)
+                .removeFromFilterCategory(categories);
+          } else{
+            ref
+                .read(categoriesAndProductControlProvider.notifier)
+                .addToFilterCategory(categories);
+          }
+          setState(() {});
+        },
+        child: Chip(
+          backgroundColor: hasFilter
+              ? CustomColor.dividerColor
+              : Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: context.radiusMedium,
+          ),
+          label: Text(
+            categories!.name,
+            style: lightTheme.textTheme.bodyMedium,
+          ),
         ),
-        label: Text(categories!.name,style: lightTheme.textTheme.bodyMedium,),
       ),
     );
   }

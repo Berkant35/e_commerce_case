@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:e_commerce_case/main.dart';
+
 import '../config/api_config.dart';
 import 'app_exception.dart';
 
@@ -9,7 +11,10 @@ class ApiConnector {
   late Dio _dio;
 
   /// Initialize
-  ApiConnector();
+  ApiConnector() {
+    logger.i("ApiConnector init...");
+    init(ApiConfig.baseUrl, ApiConfig.headers);
+  }
 
   /// initialize the Dio instance
   void init(String baseUrl, Map<String, dynamic>? headers) {
@@ -42,30 +47,17 @@ class ApiConnector {
         handler.next(e);
       },
     );
-
     _dio.interceptors.add(interceptor);
-
-
   }
 
-  Future<dynamic> get(String path, {Map<String, String>? body}) async {
+  Future<dynamic> get(
+    String path, {
+    Map<String, String>? body,
+    String queryParameters = "",
+  }) async {
     try {
-      final response =
-          await _dio.get(_dio.options.baseUrl+path,data: body).timeout(
-                ApiConfig.crudTimeout,
-                onTimeout: () => throw TimeoutException('Connection timed out'),
-              );
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      _handleDioError(e);
-    }
-  }
-
-  Future<dynamic> post(String path, {required Map<String, String>? body}) async {
-    try {
-      final response = await _dio
-          .post(_dio.options.baseUrl+path, data: body)
-          .timeout(
+      final lPath = createPath(path, queryParameters);
+      final response = await _dio.get(lPath, data: body).timeout(
             ApiConfig.crudTimeout,
             onTimeout: () => throw TimeoutException('Connection timed out'),
           );
@@ -75,11 +67,14 @@ class ApiConnector {
     }
   }
 
-  Future<dynamic> delete(String path, {required Map<String, String>? body}) async {
+  Future<dynamic> post(
+    String path, {
+    required Map<String, String>? body,
+    String queryParameters = "",
+  }) async {
     try {
-      final response = await _dio
-          .delete(_dio.options.baseUrl+path, data: body)
-          .timeout(
+      final lPath = createPath(path, queryParameters);
+      final response = await _dio.post(lPath, data: body).timeout(
             ApiConfig.crudTimeout,
             onTimeout: () => throw TimeoutException('Connection timed out'),
           );
@@ -87,6 +82,29 @@ class ApiConnector {
     } on DioException catch (e) {
       _handleDioError(e);
     }
+  }
+
+  Future<dynamic> delete(
+    String path, {
+    required Map<String, String>? body,
+    String queryParameters = "",
+  }) async {
+    try {
+      final lPath = createPath(path, queryParameters);
+      final response = await _dio.delete(lPath, data: body).timeout(
+            ApiConfig.crudTimeout,
+            onTimeout: () => throw TimeoutException('Connection timed out'),
+          );
+      return _handleResponse(response);
+    } on DioException catch (e) {
+      _handleDioError(e);
+    }
+  }
+
+  String createPath(String path, String queryParameters) {
+    final tPath = "${_dio.options.baseUrl}$path$queryParameters";
+    logger.w("End point with queries: $tPath");
+    return tPath;
   }
 
   dynamic _handleResponse(Response response) {
