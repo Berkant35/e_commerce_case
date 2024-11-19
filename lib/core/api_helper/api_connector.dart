@@ -10,13 +10,12 @@ import 'app_exception.dart';
 class ApiConnector {
   late Dio _dio;
 
-  /// Initialize
+
   ApiConnector() {
-    logger.i("ApiConnector init...");
     init(ApiConfig.baseUrl, ApiConfig.headers);
   }
 
-  /// initialize the Dio instance
+
   void init(String baseUrl, Map<String, dynamic>? headers) {
     final baseOptions = BaseOptions(
       baseUrl: baseUrl,
@@ -35,11 +34,11 @@ class ApiConnector {
     _dio = Dio(baseOptions);
     final interceptor = InterceptorsWrapper(
       onRequest: (options, handler) {
-        logger.i('Request: ${options.method} ${options.uri}');
+        logger.d('Request: ${options.method} ${options.uri}');
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        logger.i('Response: ${response.statusCode} ${response.statusMessage}');
+        logger.d('Response: ${response.statusCode} ${response.statusMessage}');
         return handler.next(response);
       },
       onError: (e, handler) {
@@ -101,12 +100,13 @@ class ApiConnector {
     }
   }
 
+  /// Create path with query parameters
   String createPath(String path, String queryParameters) {
     final tPath = "${_dio.options.baseUrl}$path$queryParameters";
-    logger.w("End point with queries: $tPath");
     return tPath;
   }
 
+  /// Handle response
   dynamic _handleResponse(Response response) {
     switch (response.statusCode) {
       case 200:
@@ -121,6 +121,7 @@ class ApiConnector {
     }
   }
 
+  /// Convert response to json
   dynamic _convertToJson(dynamic responseBody) {
     if (responseBody is String) {
       return json.decode(responseBody);
@@ -128,7 +129,7 @@ class ApiConnector {
       return responseBody;
     }
   }
-
+  /// Handle Dio error
   void _handleDioError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout) {

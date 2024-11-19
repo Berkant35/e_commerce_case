@@ -1,4 +1,4 @@
-import 'package:e_commerce_case/features/home/domain/entities/home_entity.dart';
+import 'package:e_commerce_case/features/home/domain/entities/category_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'category.g.dart';

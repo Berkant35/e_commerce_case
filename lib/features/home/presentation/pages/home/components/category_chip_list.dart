@@ -2,12 +2,10 @@ import 'package:e_commerce_case/core/constants/color.dart';
 import 'package:e_commerce_case/core/extensions/padding_extension.dart';
 import 'package:e_commerce_case/core/extensions/radius_extension.dart';
 import 'package:e_commerce_case/core/theme/theme.dart';
-import 'package:e_commerce_case/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../domain/entities/home_entity.dart';
-import '../home_viewmodel_impl.dart';
+import '../../../../domain/entities/category_entity.dart';
+import '../home_viewmodel_imp.dart';
 
 class CategoryChipList extends ConsumerStatefulWidget {
   const CategoryChipList({

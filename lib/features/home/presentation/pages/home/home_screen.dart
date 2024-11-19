@@ -1,11 +1,11 @@
 import 'package:e_commerce_case/core/extensions/padding_extension.dart';
+import 'package:e_commerce_case/features/home/presentation/pages/home/home_viewmodel_imp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'components/category_chip_list.dart';
 import 'components/product_list.dart';
 import 'components/search_input.dart';
-import 'home_viewmodel_impl.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +44,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ];
           },
-          body: const ProductList(), // Ürün listesi burada kaydırılabilir.
+          body: const ProductList(),
         ),
       ),
     );

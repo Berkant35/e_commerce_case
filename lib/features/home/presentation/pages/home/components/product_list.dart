@@ -2,9 +2,8 @@ import 'package:e_commerce_case/features/home/domain/entities/product_entity.dar
 import 'package:e_commerce_case/features/home/presentation/pages/home/components/product_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../home_viewmodel_impl.dart';
-import '../search_viewmodel_impl.dart';
+import '../home_viewmodel_imp.dart';
+import '../search_viewmodel_imp.dart';
 
 class ProductList extends ConsumerStatefulWidget {
   const ProductList({
@@ -19,10 +18,8 @@ class _ProductListState extends ConsumerState<ProductList> {
   @override
   Widget build(BuildContext context) {
     ref.watch(categoriesAndProductControlProvider);
-    // queryName'i izlemeye devam edin
     final queryName = ref.watch(searchQueryControlProvider);
 
-    // Categories ve ürünleri alırken queryName'e göre sorguyu geçirelim.
     return FutureBuilder<List<ProductEntity>>(
       future: ref
           .read(categoriesAndProductControlProvider.notifier)

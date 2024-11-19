@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../search_viewmodel_impl.dart';
+import '../search_viewmodel_imp.dart';
 
 class SearchInput extends ConsumerStatefulWidget {
   const SearchInput({
@@ -18,7 +16,6 @@ class _SearchInputState extends ConsumerState<SearchInput> {
   final TextEditingController _controller = TextEditingController();
   Timer? _debounce;
 
-  // Bu aksiyonu sunucu tarafına gereksiz istek gitmemesi için 500 ms gecikme ile yapar.
   void _performSearch(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {

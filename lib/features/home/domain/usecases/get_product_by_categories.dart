@@ -1,7 +1,6 @@
 import 'package:e_commerce_case/core/usecases/base_usecase.dart';
 import 'package:e_commerce_case/features/home/domain/entities/product_entity.dart';
 import 'package:e_commerce_case/features/home/domain/repositories/home_repository.dart';
-
 import '../../../../core/config/paths.dart';
 
 class ComplexQueryParam {

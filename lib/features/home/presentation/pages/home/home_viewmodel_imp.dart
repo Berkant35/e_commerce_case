@@ -1,11 +1,10 @@
-import 'package:e_commerce_case/features/home/domain/entities/home_entity.dart';
+import 'package:e_commerce_case/features/home/domain/entities/category_entity.dart';
 import 'package:e_commerce_case/features/home/domain/entities/product_entity.dart';
 import 'package:e_commerce_case/features/home/domain/usecases/get_categories.dart';
 import 'package:e_commerce_case/features/home/presentation/pages/home/home_viewmodel.dart';
 import 'package:e_commerce_case/injection.dart';
 import 'package:e_commerce_case/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../domain/usecases/get_product_by_categories.dart';
 
 final categoriesAndProductControlProvider =
