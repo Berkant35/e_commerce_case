@@ -6,19 +6,17 @@ import 'package:e_commerce_case/features/home/domain/entities/proudct_detail_ent
 import 'package:e_commerce_case/features/home/domain/repositories/home_repository.dart';
 import 'package:e_commerce_case/features/home/domain/usecases/get_product_by_categories.dart';
 
-import '../../../../main.dart';
-
 class HomeRepositoriesIml extends HomeRepository {
-  final RemoteDatasource remoteDatasource;
+  final HomeRemoteDatasource homeRemoteDatasource;
   final LocaleDatasource localDatasourceImp;
 
   HomeRepositoriesIml({
     required this.localDatasourceImp,
-    required this.remoteDatasource});
+    required this.homeRemoteDatasource});
 
   @override
   Future<List<CategoryEntity>> getCategories() async {
-    final categories = await remoteDatasource.getCategories();
+    final categories = await homeRemoteDatasource.getCategories();
     return categories.map((e) => e.toEntity()).toList();
   }
 
@@ -26,7 +24,7 @@ class HomeRepositoriesIml extends HomeRepository {
   Future<List<ProductEntity>> getProductsWithCategoryId(
       ComplexQueryParam complexQueryParam) async {
     final products =
-        await remoteDatasource.getProductsWithCategoryId(complexQueryParam);
+        await homeRemoteDatasource.getProductsWithCategoryId(complexQueryParam);
     // save to locale
     await localDatasourceImp.saveProductList(products);
     return products.map((e) => e.toEntity()).toList();
@@ -34,7 +32,7 @@ class HomeRepositoriesIml extends HomeRepository {
 
   @override
   Future<List<ProductEntity>> getProductsWithSearchQuery(String query) async {
-    final products = await remoteDatasource.getProductsWithSearchQuery(query);
+    final products = await homeRemoteDatasource.getProductsWithSearchQuery(query);
     return products.map((e) => e.toEntity()).toList();
   }
 
@@ -47,7 +45,7 @@ class HomeRepositoriesIml extends HomeRepository {
     }
 
     final productDetail =
-        await remoteDatasource.getProductDetailEntity(productId);
+        await homeRemoteDatasource.getProductDetailEntity(productId);
     return productDetail.toProductDetailEntity();
   }
 }

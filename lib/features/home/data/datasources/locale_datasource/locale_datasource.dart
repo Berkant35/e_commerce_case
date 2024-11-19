@@ -1,5 +1,3 @@
-
-
 import '../../models/product.dart';
 
 abstract class LocaleDatasource{

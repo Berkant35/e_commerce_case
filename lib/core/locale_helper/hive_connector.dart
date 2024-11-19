@@ -1,14 +1,10 @@
 import 'dart:async';
-
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../../main.dart';
 
 class HiveConnector {
   late Box _box;
 
   HiveConnector(String boxName) {
-    logger.i("HiveConnector: $boxName");
     _initBox(boxName);
   }
 

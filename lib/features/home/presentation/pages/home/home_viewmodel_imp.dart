@@ -5,7 +5,6 @@ import 'package:e_commerce_case/features/home/presentation/pages/home/home_viewm
 import 'package:e_commerce_case/injection.dart';
 import 'package:e_commerce_case/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../domain/usecases/get_product_by_categories.dart';
 
 final categoriesAndProductControlProvider =

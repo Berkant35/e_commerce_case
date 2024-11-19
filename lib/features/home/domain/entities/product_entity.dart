@@ -1,4 +1,3 @@
-//Proudct Entitty
 import 'package:equatable/equatable.dart';
 
 class ProductEntity extends Equatable {

@@ -2,7 +2,6 @@ import 'package:e_commerce_case/core/extensions/time_extension.dart';
 import 'package:e_commerce_case/features/home/data/models/category.dart';
 import 'package:e_commerce_case/features/home/domain/entities/product_entity.dart';
 import 'package:e_commerce_case/features/home/domain/entities/proudct_detail_entity.dart';
-import 'package:e_commerce_case/main.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 part 'product.g.dart';

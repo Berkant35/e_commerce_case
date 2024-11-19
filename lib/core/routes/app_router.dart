@@ -19,11 +19,11 @@ class AppRouter {
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
-        path: '/productDetail/:id', // Dinamik parametre
+        path: '/productDetail/:id',
         name: RouteNames.productDetail, // Rota adı
         builder: (context, state) {
-          final id = state.pathParameters['id']; // Parametreyi alın
-          return ProductDetail(id: id ?? ""); // Ekrana parametreyi gönder
+          final id = state.pathParameters['id'];
+          return ProductDetail(id: id ?? "");
         },
       ),
     ],

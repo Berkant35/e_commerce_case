@@ -23,14 +23,14 @@ void initializeDependencies() {
   // Hive Connector lazy
   injector.registerLazySingleton<HiveConnector>(()=>HiveConnector("e_commerce_case"));
   // Api
-  injector.registerLazySingleton<RemoteDatasource>(() => RemoteDatasourceImp(apiConnector: injector()));
+  injector.registerLazySingleton<HomeRemoteDatasource>(() => HomeRemoteDatasourceImp(apiConnector: injector()));
 
   //locale
   injector.registerLazySingleton<LocaleDatasource>(() => LocaleDatasourceImp(hiveConnector: injector()));
 
   //Repositories
   injector.registerLazySingleton<HomeRepository>(() => HomeRepositoriesIml(
-      remoteDatasource: injector(),
+      homeRemoteDatasource: injector(),
       localDatasourceImp: injector()));
 
   //use cases

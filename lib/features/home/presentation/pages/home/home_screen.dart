@@ -44,7 +44,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ];
           },
-          body: const ProductList(), // Ürün listesi burada kaydırılabilir.
+          body: const ProductList(),
         ),
       ),
     );

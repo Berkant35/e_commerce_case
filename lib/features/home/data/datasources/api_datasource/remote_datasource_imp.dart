@@ -5,10 +5,10 @@ import 'package:e_commerce_case/features/home/data/models/category.dart';
 import 'package:e_commerce_case/features/home/data/models/product.dart';
 import 'package:e_commerce_case/features/home/domain/usecases/get_product_by_categories.dart';
 
-class RemoteDatasourceImp extends RemoteDatasource {
+class HomeRemoteDatasourceImp extends HomeRemoteDatasource {
   final ApiConnector apiConnector;
 
-  RemoteDatasourceImp({required this.apiConnector});
+  HomeRemoteDatasourceImp({required this.apiConnector});
 
   @override
   Future<List<Category>> getCategories() async {

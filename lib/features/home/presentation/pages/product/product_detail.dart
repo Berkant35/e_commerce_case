@@ -48,18 +48,7 @@ class _ProductDetailState extends ConsumerState<ProductDetail>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Ürün Detay"),
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              if (context.canPop()) {
-                context.pop();
-              } else {
-                context.goNamed(RouteNames.home);
-              }
-            }),
-      ),
+      appBar: _appBar(context),
       body: FutureBuilder<ProductDetailEntity?>(
           future: ref
               .read(productDetailViewmodelImpControlProvider.notifier)
@@ -73,32 +62,49 @@ class _ProductDetailState extends ConsumerState<ProductDetail>
               final productDetail = snapshot.data;
               return productDetail == null
                   ? const Center(child: Text("Ürün bulunamadı"))
-                  : FadeTransition(
-                      opacity: _fadeAnimation,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ProductImage(imageUrl: productDetail.image),
-                            ProductDetails(
-                              name: productDetail.name,
-                              price: double.parse(productDetail.price),
-                              description: productDetail.description,
-                              shortDetails: productDetail.shortDetails,
-                            ),
-                            ProductStockInfo(
-                              stockAmount: productDetail.stockAmount,
-                              sku: productDetail.sku,
-                              categories: productDetail.categories,
-                            ),
-                            if (double.parse(productDetail.discount) > 0)
-                              ProductDiscount(
-                                  discount:
-                                      double.parse(productDetail.discount)),
-                          ],
-                        ),
-                      ),
-                    );
+                  : _detail(productDetail);
+            }
+          }),
+    );
+  }
+
+  FadeTransition _detail(ProductDetailEntity productDetail) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ProductImage(imageUrl: productDetail.image),
+            ProductDetails(
+              name: productDetail.name,
+              price: double.parse(productDetail.price),
+              description: productDetail.description,
+              shortDetails: productDetail.shortDetails,
+            ),
+            ProductStockInfo(
+              stockAmount: productDetail.stockAmount,
+              sku: productDetail.sku,
+              categories: productDetail.categories,
+            ),
+            if (double.parse(productDetail.discount) > 0)
+              ProductDiscount(discount: double.parse(productDetail.discount)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+      title: const Text("Ürün Detay"),
+      leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.goNamed(RouteNames.home);
             }
           }),
     );

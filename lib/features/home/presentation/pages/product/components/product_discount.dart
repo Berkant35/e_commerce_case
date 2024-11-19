@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final class ProductDiscount extends StatelessWidget {
   final double discount;
 
-  const ProductDiscount({Key? key, required this.discount}) : super(key: key);
+  const ProductDiscount({super.key, required this.discount});
 
   @override
   Widget build(BuildContext context) {

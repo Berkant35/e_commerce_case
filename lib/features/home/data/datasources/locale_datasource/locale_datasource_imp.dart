@@ -1,6 +1,5 @@
 import 'package:e_commerce_case/features/home/data/models/product.dart';
 import 'package:e_commerce_case/main.dart';
-
 import '../../../../../core/locale_helper/hive_connector.dart';
 import 'locale_datasource.dart';
 
